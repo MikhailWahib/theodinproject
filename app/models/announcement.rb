@@ -14,6 +14,7 @@ class Announcement < ApplicationRecord
   scope :expired, -> { where(expires_at: ...Time.zone.now) }
   scope :showable_messages, ->(disabled_ids) { active.where.not(id: disabled_ids) }
   scope :ordered_by_recent, -> { order(created_at: :desc) }
+  scope :count_for, ->(status) { for_status(status).count }
 
   def self.for_status(status)
     {
